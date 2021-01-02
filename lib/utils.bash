@@ -50,7 +50,11 @@ download_release() {
   os="$(get_os)"
   processor="$(get_processor)"
 
-  url="$GH_REPO/releases/download/v${version}/zoxide-${processor}-unknown-${kernel_name}-${os}"
+  if [ "${kernel_name}" == "darwin" ]; then
+    url="$GH_REPO/releases/download/v${version}/zoxide-${processor}-apple-${kernel_name}"
+  else
+    url="$GH_REPO/releases/download/v${version}/zoxide-${processor}-unknown-${kernel_name}-${os}"
+  fi
 
   echo "* Downloading zoxide release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
