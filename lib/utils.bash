@@ -51,7 +51,7 @@ download_release() {
   processor="$(get_processor)"
 
   if [ "${kernel_name}" == "darwin" ]; then
-    url="$GH_REPO/releases/download/v${version}/zoxide-${processor}-apple-${kernel_name}"
+    url="$GH_REPO/releases/download/v${version}/zoxide-x86_64-apple-${kernel_name}"
   else
     url="$GH_REPO/releases/download/v${version}/zoxide-${processor}-unknown-${kernel_name}-${os}"
   fi
