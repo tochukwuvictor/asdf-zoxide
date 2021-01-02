@@ -30,17 +30,27 @@ list_all_versions() {
   list_github_tags
 }
 
-get_arch() {
-  uname | tr '[:upper:]' '[:lower:]'
+get_kernel_name() {
+  uname -s | tr '[:upper:]' '[:lower:]'
+}
+
+get_os() {
+  uname -o | awk -F '/' '{print $1}' | tr '[:upper:]' '[:lower:]'
+}
+
+get_processor() {
+  uname -p
 }
 
 download_release() {
-  local version filename platform url
+  local version filename kernel_name os processor url
   version="$1"
   filename="$2"
-  platform="$(get_arch)"
+  kernel_name="$(get_kernel_name)"
+  os="$(get_os)"
+  processor="$(get_processor)"
 
-  url="$GH_REPO/releases/download/v${version}/zoxide_${platform}_amd64"
+  url="$GH_REPO/releases/download/v${version}/zoxide-${processor}-unknown-${kernel_name}-${os}"
 
   echo "* Downloading zoxide release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
